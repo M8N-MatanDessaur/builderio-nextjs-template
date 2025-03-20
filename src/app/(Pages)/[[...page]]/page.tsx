@@ -22,10 +22,7 @@ const Page = async ({ params }: { params: { page: string[] | undefined } }) => {
     // Fetch content using the resolved path and locale
     const content = await fetchBuilderContent(contentPath, localeInfo.locale, "page");
 
-    // Only render the page if we have valid content
-    if (content) {
-      return <ClientPage locale={localeInfo.locale} content={content} />;
-    }
+    return <ClientPage locale={localeInfo.locale} content={content} />;
   }
 
   // Show NotFound for any error case (invalid locale or missing content)
