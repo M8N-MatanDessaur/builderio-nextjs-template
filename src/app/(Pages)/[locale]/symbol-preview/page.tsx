@@ -22,11 +22,7 @@ const Page = async ({ params }: { params: { locale?: string; page?: string[] } }
     const builderModelName = "symbol";
     const content = await fetchBuilderContent(urlPath, localeInfo.locale, builderModelName);
 
-    // Only render the page if we have valid content
-    if (content) {
-      // Pass the locale and content to the client-side component
-      return <ClientPage locale={localeInfo.locale} content={content} />;
-    }
+    return <ClientPage locale={localeInfo.locale} content={content} />;
   }
 
   // Show NotFound for any error case (invalid locale or missing content)
