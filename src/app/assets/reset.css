@@ -134,3 +134,8 @@ button:-moz-focusring,
 [type="submit"]:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
+
+/* Hides nextjs error overlay */
+nextjs-portal {
+  display: none;
+}
