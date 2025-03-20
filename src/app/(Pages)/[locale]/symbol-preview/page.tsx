@@ -8,6 +8,10 @@ import { fetchBuilderContent } from "@/utils/builderUtils";
 import { getLocaleFromParams } from "@/utils/localeUtils";
 import ClientPage from "./ClientPage";
 
+// Enable Incremental Static Regeneration with a 24-hour revalidation period
+// Adjust this value based on how frequently your symbols change
+export const revalidate = 86400;
+
 // Server component for the Symbol Preview Page
 const Page = async ({ params }: { params: { locale?: string; page?: string[] } }) => {
   // Get locale info and check if valid

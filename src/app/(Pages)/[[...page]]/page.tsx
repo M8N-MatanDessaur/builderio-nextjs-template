@@ -8,6 +8,10 @@ import { fetchBuilderContent } from "@/utils/builderUtils";
 import { getLocaleFromParams } from "@/utils/localeUtils";
 import ClientPage from "./ClientPage";
 
+// Enable Incremental Static Regeneration with a 10-minute revalidation period
+// Adjust this value based on how frequently your content changes
+export const revalidate = 600;
+
 // Server component for dynamic routing
 const Page = async ({ params }: { params: { page: string[] | undefined } }) => {
   // Get locale info and check if valid
