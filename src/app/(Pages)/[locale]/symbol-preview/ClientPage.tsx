@@ -2,8 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { RenderBuilderContent } from "@/components/builder";
+import { useIsPreviewing } from "@builder.io/react";
 import useLocationStore from "@/store/useLocaleStore";
 import Loading from "@/components/common/Loading";
+import NotFound from "@/components/common/NotFound";
 
 const ClientPage = ({
   locale,
@@ -14,7 +16,8 @@ const ClientPage = ({
 }) => {
   // Add hydration safety with useState and useEffect
   const [isHydrated, setIsHydrated] = useState(false);
-
+  // Add previewing check
+  const isPreviewing = useIsPreviewing();
   // Get the setSelectedLocale function from the Zustand store
   const setSelectedLocale = useLocationStore((state) => state.setSelectedLocale);
 
@@ -31,10 +34,13 @@ const ClientPage = ({
     return <Loading />;
   }
 
-  // After hydration (client-side), render with full functionality
-  return (
-    <RenderBuilderContent content={content} model="symbol" locale={locale} />
-  );
+  if (content || isPreviewing) {
+    return (
+      <RenderBuilderContent content={content} model="symbol" locale={locale} />
+    );
+  }
+
+   return <NotFound />;
 };
 
 export default ClientPage;
