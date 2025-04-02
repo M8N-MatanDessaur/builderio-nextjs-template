@@ -1,5 +1,8 @@
 # Next.js + Builder.io Localized Starter Template
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/your-username/nextjs-builder-localized-starter/ci.yml)](https://github.com/your-username/nextjs-builder-localized-starter/actions)
+
 A minimalist, production-ready starter template for creating localized websites with Next.js 15, Builder.io, and Zustand for state management.
 
 ## 🌐 Features
@@ -193,8 +196,30 @@ When creating new components for Builder.io, follow this pattern to maintain con
 
 ---
 
+## 🛠️ Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
+
+## 📜 License
+
+This project is licensed under the [MIT License](LICENSE).
+
 ## 📚 Additional Resources
 
 - [Builder.io Documentation](https://www.builder.io/c/docs/intro)
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Zustand Documentation](https://zustand.docs.pmnd.rs/)
+
+## 🛠️ Known Issues
+
+### 1. Builder.io API Key Not Working
+Ensure your `.env` file contains the correct `NEXT_PUBLIC_BUILDER_API_KEY`. If the key is invalid, you may encounter errors when fetching content.
+
+### 2. Hydration Errors
+If you encounter hydration errors, ensure that your components are properly wrapped with `use client` where necessary.
+
+### 3. Unsupported Node.js Version
+This template requires Node.js 18.17.0 or later. Use `nvm` to switch to the correct version:
+```bash
+nvm use
+```

@@ -39,7 +39,7 @@ export const getLocaleFromParams = async (params: { page?: string[]; locale?: st
   if (resolvedParams.locale) {
     const isLocaleValid = isValidLocale(resolvedParams.locale);
     return { 
-      locale: resolvedParams.locale, 
+      locale: isLocaleValid ? resolvedParams.locale : DEFAULT_LOCALE, // Fallback to default locale
       urlPath: "/" + (pageSegments.join("/") || ""), 
       isLocaleValid 
     };
