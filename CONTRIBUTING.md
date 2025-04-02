@@ -20,24 +20,15 @@ Thank you for considering contributing to this project! Please follow these guid
 
 ## Code Standards
 
-- Use Prettier for code formatting.
-- Follow the ESLint rules defined in `.eslintrc.json`.
+- Follow the coding conventions used in the project.
 - Write clear and concise comments for complex logic.
 
 ## Submitting Changes
 
-1. Commit your changes with a descriptive message:
-   ```bash
-   git commit -m "Add feature: your-feature-name"
-   ```
-2. Push your branch to your fork:
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-3. Open a pull request to the `main` branch of this repository.
+- Ensure your changes are well-tested.
+- Submit a pull request with a clear description of the changes.
 
 ## Reporting Issues
 
-If you encounter any issues, please open an issue with a clear description and steps to reproduce the problem.
-
-Thank you for contributing!
+- Provide detailed steps to reproduce the issue.
+- Include relevant logs or screenshots if applicable.
