@@ -21,7 +21,7 @@ const NotFound: React.FC<NotFoundProps> = (props) => {
   } = props;
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} role="alert">
       <div className={styles.content}>
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.message}>{message}</p>

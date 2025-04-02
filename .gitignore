@@ -38,3 +38,23 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDE-specific files
+.idea/
+.vscode/
+*.swp
+
+# Logs
+logs
+*.log
+
+# Build artifacts
+dist/
+*.cache
+
+# Coverage reports
+coverage/
+
+# Remove Docker-related files
+docker-compose.yml
+Dockerfile

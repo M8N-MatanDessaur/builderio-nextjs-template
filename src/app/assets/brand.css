@@ -1,8 +1,12 @@
 /**
  * @file brand.css
  * @description Unified brand design system tokens
+ * 
+ * Add your brand-specific design tokens here, such as colors, fonts, and spacing.
  */
 
- :root {
-
-  }
+:root {
+  /* Example tokens */
+  --primary-color: #0070f3;
+  --secondary-color: #ff4081;
+}

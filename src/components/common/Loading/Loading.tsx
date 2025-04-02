@@ -25,6 +25,8 @@ const Loading: React.FC<LoadingProps> = (props) => {
     <div 
       className={styles.container} 
       style={{ height: typeof height === 'number' ? `${height}px` : height }}
+      role="status"
+      aria-live="polite"
     >
       <div 
         className={styles.spinner}
