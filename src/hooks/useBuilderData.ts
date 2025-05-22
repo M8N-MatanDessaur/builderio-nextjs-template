@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { builder } from '@builder.io/sdk';
-import { REVALIDATION_TIMEFRAMES } from '@/utils/builderUtils';
 import useLocationStore from "@/store/useLocaleStore";
 import { useShallow } from "zustand/react/shallow";
 
@@ -17,12 +16,10 @@ interface UseBuilderDataProps {
   limit?: number;
   offset?: number;
   fields?: string;
-  contentType?: keyof typeof REVALIDATION_TIMEFRAMES;
-  noCache?: boolean;
 }
 
 /**
- * Enhanced hook for fetching Builder.io data with Next.js 15 caching
+ * Hook for fetching Builder.io data with client-side only approach
  * 
  * @param model The Builder.io model to fetch data from
  * @param query Optional query object to filter data
@@ -33,13 +30,10 @@ interface UseBuilderDataProps {
  * @param limit Optional limit to restrict the number of results
  * @param offset Optional offset to skip results
  * @param fields Optional fields to include in the response
- * @param contentType Optional content type to determine revalidation time
- * @param noCache Optional flag to disable caching
  * @returns Object with data, loading state, error, and refetch function
  * 
- * This hook uses Builder.io's getAll method to fetch data with caching
+ * This hook uses Builder.io's getAll method to fetch data without caching
  * It also uses the selected locale from the location store for requests
- * The revalidation time is determined by the content type or set to 0
  * The data, loading state, and error are returned along with a refetch function
  * 
  * @example (fetching blogs)
@@ -48,8 +42,7 @@ interface UseBuilderDataProps {
  *  query: { published: true },
  *  sort: 'date',
  *  sortBy: { field: 'date', direction: '-1' },
- *  limit: 10,
- *  contentType: 'BLOG' //For revalidation time (optional)(default: PAGE)
+ *  limit: 10
  * });
  * 
  * @example (fetching pages)
@@ -58,8 +51,7 @@ interface UseBuilderDataProps {
  *  query: { published: true },
  *  sort: 'title',
  *  sortBy: { field: 'title', direction: '1' },
- *  limit: 10,
- *  contentType: 'PAGE' //For revalidation time (optional)(default: PAGE)
+ *  limit: 10
  * });
  */
 export default function useBuilderData({
@@ -71,9 +63,7 @@ export default function useBuilderData({
   sortBy,
   limit,
   offset,
-  fields,
-  contentType = 'PAGE',
-  noCache = false
+  fields
 }: UseBuilderDataProps) {
   // State for data, loading, and error
   const [data, setData] = useState<any>(null);
@@ -87,8 +77,7 @@ export default function useBuilderData({
     }))
   );
   
-  // Get appropriate revalidation timeframe for this content
-  const revalidationTime = noCache ? 0 : REVALIDATION_TIMEFRAMES[contentType];
+
   
   // Define the fetchData function using useCallback
   const fetchData = useCallback(async () => {
@@ -109,14 +98,6 @@ export default function useBuilderData({
         query,
         filters,
       };
-      
-      // Add cache settings based on content type
-      if (!noCache) {
-        builderOptions.cacheSeconds = revalidationTime;
-        builderOptions.next = { 
-          revalidate: revalidationTime
-        };
-      }
       
       // Add limit if provided
       if (limit !== undefined) {
@@ -162,9 +143,7 @@ export default function useBuilderData({
     limit,
     offset,
     fields,
-    revalidationTime,
-    selectedLocale,
-    noCache
+    selectedLocale
   ]);
   
   // Effect to fetch data when dependencies change

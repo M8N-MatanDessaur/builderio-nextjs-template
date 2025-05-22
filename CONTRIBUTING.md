@@ -4,7 +4,7 @@ Thank you for considering contributing to this project! Please follow these guid
 
 ## Getting Started
 
-1. Fork the repository.
+1. To use this template, you can either fork the repository or download it as a zip file.
 2. Clone your forked repository:
    ```bash
    git clone https://github.com/your-username/nextjs-builder-localized-starter.git

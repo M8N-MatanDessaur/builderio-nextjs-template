@@ -1,16 +1,12 @@
 /**
  * @file Dynamic Page Router
- * @description Handles dynamic routing and content fetching from Builder.io
+ * @description Handles dynamic routing and content fetching from Builder.io with client-side rendering
  */
 
 import React from "react";
 import { fetchBuilderContent } from "@/utils/builderUtils";
 import { getLocaleFromParams } from "@/utils/localeUtils";
 import ClientPage from "./ClientPage";
-
-// Enable Incremental Static Regeneration with a 10-minute revalidation period
-// Adjust this value based on how frequently your content changes
-export const revalidate = 600;
 
 // Server component for dynamic routing
 const Page = async ({ params }: { params: { page: string[] | undefined } }) => {
