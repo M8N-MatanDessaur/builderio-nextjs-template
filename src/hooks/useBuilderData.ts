@@ -54,6 +54,7 @@ interface UseBuilderDataProps {
  *  limit: 10
  * });
  */
+
 export default function useBuilderData({
   model,
   query = {},
@@ -76,8 +77,6 @@ export default function useBuilderData({
       selectedLocale: state.selectedLocale,
     }))
   );
-  
-
   
   // Define the fetchData function using useCallback
   const fetchData = useCallback(async () => {

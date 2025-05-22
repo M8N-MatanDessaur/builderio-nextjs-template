@@ -1,6 +1,16 @@
 /**
- * @file Dynamic Page Router
- * @description Handles dynamic routing and content fetching from Builder.io with client-side rendering
+ * @file page.tsx - Server Component
+ * @description Server-side component for dynamic routing and content fetching
+ * 
+ * This component is responsible for server-side operations only:
+ * 
+ * - Resolves URL parameters to determine the correct locale and content path
+ * - Fetches content from Builder.io without caching or revalidation
+ * - Passes data to ClientPage.tsx for actual rendering
+ * 
+ * By separating server and client responsibilities, this architecture prevents
+ * React 19 hydration errors and optimizes for Next.js App Router's server/client
+ * component model.
  */
 
 import React from "react";

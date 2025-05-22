@@ -13,6 +13,13 @@ import "./assets/reset.css";
 import "./assets/brand.css";
 
 // SEO metadata
+/**
+ * The metadata object is used to set the metadata of the page.
+ * It is used by search engines to display the title and description in search results.
+ * Add more metadata properties as needed. Follow the Next.js documentation for more information.
+ * 
+ * @see https://nextjs.org/docs/app/getting-started/metadata-and-og-images
+ */
 export const metadata = {
   title: "Builder.io - Next.js Example",
   description: "Example of using Builder.io with Next.js",

@@ -1,20 +1,24 @@
 /**
- * @file RenderBuilderContent Component
- * @description Renders Builder.io content with client-side only approach to prevent React 19 hydration issues
+ * @file builder.tsx
+ * @description Renders Builder.io content with preview mode support, optimized for Next.js 15 and React 19
+ * 
+ * This component solves React 19 hydration issues with Builder.io content by:
+ * 
+ * - Using client-side only rendering with isClient state
+ * - Stabilizing content with refs between renders
+ * - Providing custom error handling with fallbacks
+ * - Using a separate StableBuilderContent component for better control
  */
-// This file contains the RenderBuilderContent component that handles Builder.io content rendering
-// with a client-side only approach to prevent React 19 hydration errors
 
 "use client";
-import { ComponentProps, Suspense, useState, useEffect, useRef } from "react";
+import React, { ComponentProps, useRef, useState, useEffect } from "react";
 import { BuilderComponent, useIsPreviewing } from "@builder.io/react";
 import { builder } from "@builder.io/sdk";
 import "../builder-registry";
+// No builderUtils imports needed
 import NotFound from "./common/NotFound";
-import Loading from "./common/Loading";
 
 type BuilderPageProps = ComponentProps<typeof BuilderComponent> & {
-  fallback?: React.ReactNode;
   errorComponent?: React.ReactNode;
 };
 
@@ -35,18 +39,51 @@ function BuilderErrorBoundary({ children, fallback }: { children: React.ReactNod
   return <>{children}</>;
 }
 
+// Content wrapper to handle content stability for React 19
+function StableBuilderContent({ 
+  content, 
+  model, 
+  locale 
+}: Pick<BuilderPageProps, 'content' | 'model' | 'locale'>) {
+  // Use a ref to ensure the content is stable between renders
+  const contentRef = useRef(content);
+  
+  // Add state to track if we're on the client
+  const [isClient, setIsClient] = useState(false);
+  
+  // Only render on client side to prevent hydration issues
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
+  if (!isClient) {
+    // Return an empty div during server-side rendering with same className structure
+    // but with suppressHydrationWarning to prevent React errors
+    return <div suppressHydrationWarning className="builder-content" />;
+  }
+  
+  return (
+    <div suppressHydrationWarning>
+      <BuilderComponent
+        content={contentRef.current}
+        model={model}
+        locale={locale}
+        options={{
+          // Only fetch needed data for optimal performance
+          includeRefs: true,
+          noTraverse: true, // Prevent unnecessary traversal for performance
+        }}
+      />
+    </div>
+  );
+}
+
 export function RenderBuilderContent({ 
   content, 
   model, 
   locale,
-  fallback,
   errorComponent
 }: BuilderPageProps) {
-  // Track if we're on the client side to prevent hydration errors
-  const [isClient, setIsClient] = useState(false);
-  // Use a ref to stabilize content between renders
-  const contentRef = useRef(content);
-  
   // Call the useIsPreviewing hook to determine if
   // the page is being previewed in Builder
   const isPreviewing = useIsPreviewing();
@@ -54,39 +91,16 @@ export function RenderBuilderContent({
   // Custom error component or default error page
   const ErrorComponent = errorComponent || <NotFound />;
   
-  // Custom loading fallback or default loading spinner
-  const LoadingFallback = fallback || <Loading />;
-  
-  // Set isClient to true on component mount (client-side only)
-  useEffect(() => {
-    contentRef.current = content;
-    setIsClient(true);
-  }, [content]);
-  
-  // If not on client yet, return a placeholder div to prevent hydration errors
-  if (!isClient) {
-    return <div suppressHydrationWarning />;
-  }
-  
   // If "content" has a value or the page is being previewed in Builder,
   // render the BuilderComponent with the specified content and model props.
-  if (contentRef.current || isPreviewing) {
+  if (content || isPreviewing) {
     return (
       <BuilderErrorBoundary fallback={ErrorComponent}>
-        <Suspense fallback={LoadingFallback}>
-            <div suppressHydrationWarning>
-              <BuilderComponent
-                content={contentRef.current}
-                model={model}
-                locale={locale}
-                options={{
-                  // Only fetch needed data for optimal performance
-                  includeRefs: true,
-                  noTraverse: true, // Prevent unnecessary traversal for performance
-                }}
-              />
-            </div>
-        </Suspense>
+        <StableBuilderContent
+          content={content}
+          model={model}
+          locale={locale}
+        />
       </BuilderErrorBoundary>
     );
   }

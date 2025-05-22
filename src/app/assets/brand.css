@@ -1,8 +1,16 @@
 /**
  * @file brand.css
- * @description Unified brand design system tokens
+ * @description CSS variables and reused styles for consistent design
  * 
- * Add your brand-specific design tokens here, such as colors, fonts, and spacing.
+ * This file centralizes design tokens as CSS variables to maintain
+ * consistent styling across components and Builder.io content.
+ * 
+ * - Defines brand colors, typography, and spacing
+ * - Enables theme changes from a single location
+ * - Provides a bridge between code and Builder.io visual editing
+ * 
+ * NOTE: Design tokens defined here should also be updated in
+ * builder-registry.ts to make them available in the Builder.io editor.
  */
 
 :root {

@@ -1,6 +1,15 @@
 /**
- * @file Symbol Preview Page
- * @description Server component for rendering Builder.io symbols with client-side rendering
+ * @file page.tsx - Symbol Preview Server Component
+ * @description Server-side component for handling Builder.io symbol previews
+ * 
+ * This component is responsible for server-side operations only:
+ * 
+ * - Handles locale detection from the URL parameters
+ * - Fetches symbol content from Builder.io without caching
+ * - Passes the symbol data to ClientPage.tsx for rendering
+ * 
+ * This architecture prevents React 19 hydration errors by separating
+ * server and client responsibilities for Builder.io symbol previews.
  */
 
 import React from "react";

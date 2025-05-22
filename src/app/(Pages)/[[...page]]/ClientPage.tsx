@@ -1,3 +1,18 @@
+/**
+ * @file ClientPage.tsx
+ * @description Client-side component for rendering Builder.io content
+ * 
+ * This component is separated from page.tsx to prevent React 19 hydration errors.
+ * While page.tsx handles server-side data fetching, this component:
+ * 
+ * - Initializes the locale state safely after hydration
+ * - Detects Builder.io preview mode on the client side
+ * - Renders Builder content only when client-side mounted
+ * 
+ * This pattern solves hydration mismatches by ensuring consistent rendering
+ * between server and client with Builder.io content.
+ */
+
 "use client";
 
 import { useEffect } from "react";
